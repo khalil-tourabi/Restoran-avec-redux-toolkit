@@ -1,28 +1,14 @@
-import React, { useState } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  Textarea,
-  Button,
-} from "@chakra-ui/react";
+import React from "react";
+import { FormControl, FormLabel, Input, Select, Textarea, Button } from "@chakra-ui/react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { Cloudinary } from 'cloudinary-core';
-// import 'dotenv/config'
+import { useDispatch } from "react-redux";
+import { addPost } from "../../state/posts/postSlice";
+import { useNavigate } from "react-router-dom";
 
 const AjouterArticleForm = () => {
-  const [post, setPost] = useState({
-    name: "",
-    category: "",
-    image: "",
-    description: "",
-    id: uuidv4(),
-  });
-
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const cloudinary = new Cloudinary({
@@ -31,23 +17,18 @@ const AjouterArticleForm = () => {
     api_secret: 'yupXjn_W-Dftnp1pHZ4ulYznVNs',
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPost((prevPost) => ({
-      ...prevPost,
-      [name]: value,
-    }));
-  };
-
-  const handleFileChange = (e) => {
-    setPost((prevPost) => ({
-      ...prevPost,
-      image: e.target.files[0]
-    }));
-  };
+  // const handleFileChange = (e) => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const post = {
+      name: e.target.name.value,
+      category: e.target.category.value,
+      image: e.target.image.files[0],
+      description: e.target.description.value,
+      id: uuidv4(),
+    };
 
     if (post.image) {
       const formData = new FormData();
@@ -59,14 +40,14 @@ const AjouterArticleForm = () => {
         const imageUrl = res.data.secure_url;
         post.image = imageUrl;
 
-        await axios.post("http://localhost:3000/posts", post);
-        navigate("/articles");
+        dispatch(addPost(post)); 
+         navigate("/articles");
       } catch (err) {
         console.error("Error while uploading image or adding post:", err);
       }
     } else {
       try {
-        await axios.post("http://localhost:3000/posts", post);
+        dispatch(addPost(post)); 
         navigate("/articles");
       } catch (err) {
         console.error("Error while adding post:", err);
@@ -92,8 +73,6 @@ const AjouterArticleForm = () => {
           <Input
             name="name"
             placeholder="Article Title"
-            value={post.name}
-            onChange={handleChange}
           />
         </FormControl>
         <FormControl>
@@ -101,8 +80,6 @@ const AjouterArticleForm = () => {
           <Select
             name="category"
             placeholder="Select Categorie"
-            value={post.category}
-            onChange={handleChange}
           >
             <option value="BreakFast">Breakfast</option>
             <option value="Lunch">Lunch</option>
@@ -117,7 +94,7 @@ const AjouterArticleForm = () => {
             <input
               type="file"
               name="image"
-              onChange={handleFileChange}
+              // onChange={handleFileChange}
             />
           </div>
         </div>
@@ -125,8 +102,6 @@ const AjouterArticleForm = () => {
           <FormLabel>Description</FormLabel>
           <Textarea
             name="description"
-            value={post.description}
-            onChange={handleChange}
             placeholder="Enter description"
             size="sm"
           />

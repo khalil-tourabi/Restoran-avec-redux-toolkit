@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import NavBar from '../Accueil/navbar';
 import ArticlesPage from './articlesPage';
 
-const Articles = () => {
+const Articles = ({posts}) => {
     return ( 
         <React.Fragment>
             <NavBar />
-            <ArticlesPage />
+            <ArticlesPage posts={posts}/>
         </React.Fragment>
      );
 }

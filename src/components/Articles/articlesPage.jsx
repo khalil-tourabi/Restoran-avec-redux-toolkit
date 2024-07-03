@@ -10,19 +10,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../state/posts/postSlice";
 
-const ArticlesPage = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/posts")
-      .then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+const ArticlesPage = ({posts}) => {
+  const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     const confirm = window.confirm('Are you sure you want to delete the post?');
@@ -47,9 +39,9 @@ const ArticlesPage = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {products.map((product) => (
+        {posts.map((post) => (
           <Box
-            key={product.id}
+            key={post.id}
             w={{ base: "90%", sm: "xs" }}
             rounded="sm"
             my={5}
@@ -65,7 +57,7 @@ const ArticlesPage = () => {
           >
             <Box h="200px" borderBottom="1px" borderColor="black">
               <Img
-                src={product.image || "https://via.placeholder.com/200"} 
+                src={post.image || "https://via.placeholder.com/200"} 
                 roundedTop="sm"
                 objectFit="cover"
                 h="full"
@@ -75,10 +67,10 @@ const ArticlesPage = () => {
             </Box>
             <Box p={4}>
               <Heading color="black" fontSize="2xl" noOfLines={1}>
-                {product.name}
+                {post.name}
               </Heading>
               <Text color="gray.600" noOfLines={1}>
-                Category: {product.category}
+                Category: {post.category}
               </Text>
             </Box>
             <HStack
@@ -87,13 +79,13 @@ const ArticlesPage = () => {
               p={4}
               justify="space-between"
             >
-              <Button as={Link} to={`/updatepost/${product.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
+              <Button as={Link} to={`/updatepost/${post.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Edit
               </Button>
-              <Button as={Link} to={`/article/${product.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
+              <Button as={Link} to={`/article/${post.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Show Details
               </Button>
-              <Button onClick={() => handleDelete(product.id)} colorScheme="teal" variant="outline" justifyContent={"center"}>
+              <Button onClick={() => dispatch(deletePost(post.id))} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Delete
               </Button>
             </HStack>

@@ -11,7 +11,6 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { SearchBar } from "./searchBar";
 import { Link } from "react-router-dom";
-import ProductContext from "../ProductsContext";
 
 const Links = [
   { name: "Accueil", path: "/" },
@@ -36,7 +35,7 @@ const NavLink = ({ children, path }) => (
   </Box>
 );
 
-export default function NavBar() {
+export default function NavBar({posts}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -63,7 +62,7 @@ export default function NavBar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <SearchBar />
+            <SearchBar posts={posts} />
           </Flex>
         </Flex>
       </Box>

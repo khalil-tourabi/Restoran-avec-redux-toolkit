@@ -7,32 +7,19 @@ import {
   InputRightAddon,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-// import ProductContext from "../ProductsContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-export const SearchBar = () => {
-  // const { products } = useContext(ProductContext);
-  const [products, setProducts] = useState([]);
+export const SearchBar = ({posts}) => {
+
   const [searchedItem, setSearchedItem] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/posts")
-      .then((res) => {
-        console.log(res.data);
-        setProducts(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
   const handleSearch = () => {
-    const product = products.find(
-      (product) => product.name.toLowerCase() === searchedItem.toLowerCase()
+    const post = posts.find(
+      (post) => post.name.toLowerCase() === searchedItem.toLowerCase()
     );
-    if (product) {
-      navigate(`/article/${product.id}`);
+    if (post) {
+      navigate(`/article/${post.id}`);
     } else {
       window.confirm("No such Post is available");
     }

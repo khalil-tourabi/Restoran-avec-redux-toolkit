@@ -8,15 +8,11 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { BsArrowUpRight } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import ProductContext from "../ProductsContext";
 
-export default function PostWithLike() {
-  const { products } = useContext(ProductContext);
+export default function PostWithLike({posts}) {
 
-  // Get the last three products
-  const lastThreeProducts = products.slice(-4);
+  const lastThreePosts = posts.slice(-4);
 
   return (
     <Box px={20}>
@@ -25,9 +21,9 @@ export default function PostWithLike() {
           Articles
         </Heading>
         <Flex justifyContent="center" flexWrap="wrap">
-          {lastThreeProducts.map((product, index) => (
+          {lastThreePosts.map((post, index) => (
             <Link
-              to={`/article/${product.id}`}
+              to={`/article/${post.id}`}
               key={index}
               style={{ textDecoration: "none" }}
             >
@@ -51,20 +47,20 @@ export default function PostWithLike() {
               >
                 <Box h="200px" borderBottom="1px" borderColor="black">
                   <Img
-                    src={product.image}
+                    src={post.image}
                     roundedTop="sm"
                     objectFit="cover"
                     h="full"
                     w="full"
-                    alt={product.title}
+                    alt={post.title}
                   />
                 </Box>
                 <Box p={4}>
                   <Heading color="black" fontSize="2xl" noOfLines={1}>
-                    {product.name}
+                    {post.name}
                   </Heading>
                   <Text color="gray.500" noOfLines={2}>
-                    {product.category}
+                    {post.category}
                   </Text>
                 </Box>
               </Box>

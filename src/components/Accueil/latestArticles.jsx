@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   SimpleGrid,
   Box,
@@ -7,14 +7,12 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-import ProductContext from "../ProductsContext";
 import { Link } from "react-router-dom";
 
-const LatestArticles = () => {
-  const { products } = useContext(ProductContext);
-  console.log(products);
+const LatestArticles = ({posts}) => {
+  console.log(posts);
 
-  const latestProducts = products.slice(-3);
+  const latestPosts = posts.slice(-3);
 
   return (
     <Box p="5%">
@@ -23,24 +21,24 @@ const LatestArticles = () => {
           Dernier Articles
         </Heading>
         <SimpleGrid columns={[1, 2, 3]} spacing={4}>
-          {latestProducts.map((product, index) => (
+          {latestPosts.map((post, index) => (
             <Box key={index}>
               <center>
                 <Box borderWidth="1px" borderRadius="lg" p={4}>
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={post.image}
+                    alt={post.name}
                     borderRadius="md"
                     width="250px" 
                     height="200px" 
                   />
                   <Heading size="md" mt={4}>
-                    {product.name}
+                    {post.name}
                   </Heading>
-                  <Text mt={2}>{product.category}</Text>
+                  <Text mt={2}>{post.category}</Text>
                   <Button
                     as={Link}
-                    to={`/article/${product.id}`}
+                    to={`/article/${post.id}`}
                     mt={4}
                     colorScheme="blue"
                   >

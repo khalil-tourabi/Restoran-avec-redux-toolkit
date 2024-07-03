@@ -21,7 +21,8 @@ import { useEffect, useState } from "react";
 import { MdLocalShipping } from "react-icons/md";
 import { useParams } from "react-router-dom";
 
-export default function Article() {
+export default function Article({posts}) {
+
   const [data, setData] = useState([]);
 
   const { id } = useParams();
