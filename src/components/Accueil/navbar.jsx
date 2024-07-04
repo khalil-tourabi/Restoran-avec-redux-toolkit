@@ -12,6 +12,9 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { SearchBar } from "./searchBar";
 import { Link } from "react-router-dom";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import { useSelector } from "react-redux";
 
 const Links = [
   { name: "Accueil", path: "/" },
@@ -38,6 +41,8 @@ const NavLink = ({ children, path }) => (
 
 export default function NavBar({ posts }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const {user} = useSelector((store) => store.user)
 
   return (
     <>
@@ -66,12 +71,7 @@ export default function NavBar({ posts }) {
           </HStack>
           <Flex alignItems={"center"}>
             <SearchBar posts={posts} />
-            <Button as={Link} to={'/login'} colorScheme="teal" variant="link" ml={10} >
-              Login
-            </Button>
-            <Button as={Link} to={'/'} colorScheme="teal" variant="link" ml={10} hidden>
-              Logout
-            </Button>
+            {user.isLogged ? <LogoutButton /> : <LoginButton />}
           </Flex>
         </Flex>
       </Box>
