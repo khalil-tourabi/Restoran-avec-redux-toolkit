@@ -36,7 +36,7 @@ const NavLink = ({ children, path }) => (
   </Box>
 );
 
-export default function NavBar({ posts }) {
+export default function LogOutNavbar({ posts }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -66,10 +66,10 @@ export default function NavBar({ posts }) {
           </HStack>
           <Flex alignItems={"center"}>
             <SearchBar posts={posts} />
-            <Button as={Link} to={'/login'} colorScheme="teal" variant="link" ml={10} >
+            <Button as={Link} to={'/login'} colorScheme="teal" variant="link" ml={10} hidden >
               Login
             </Button>
-            <Button as={Link} to={'/'} colorScheme="teal" variant="link" ml={10} hidden>
+            <Button as={Link} to={'/'} colorScheme="teal" variant="link" ml={10} >
               Logout
             </Button>
           </Flex>

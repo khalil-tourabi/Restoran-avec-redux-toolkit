@@ -1,8 +1,15 @@
 import React from "react";
-import { FormControl, FormLabel, Input, Select, Textarea, Button } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Textarea,
+  Button,
+} from "@chakra-ui/react";
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
-import { Cloudinary } from 'cloudinary-core';
+import { v4 as uuidv4 } from "uuid";
+import { Cloudinary } from "cloudinary-core";
 import { useDispatch } from "react-redux";
 import { addPost } from "../../state/posts/postSlice";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +19,10 @@ const AjouterArticleForm = () => {
   const navigate = useNavigate();
 
   const cloudinary = new Cloudinary({
-    cloud_name: 'diuoo1cnx',
-    api_key: '328562688448333',
-    api_secret: 'yupXjn_W-Dftnp1pHZ4ulYznVNs',
+    cloud_name: "diuoo1cnx",
+    api_key: "328562688448333",
+    api_secret: "yupXjn_W-Dftnp1pHZ4ulYznVNs",
   });
-
-  // const handleFileChange = (e) => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,25 +37,23 @@ const AjouterArticleForm = () => {
 
     if (post.image) {
       const formData = new FormData();
-      formData.append('file', post.image);
-      formData.append('upload_preset', 'restoran');
+      formData.append("file", post.image);
+      formData.append("upload_preset", "restoran");
 
       try {
-        const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/image/upload`, formData);
+        const res = await axios.post(
+          `https://api.cloudinary.com/v1_1/${
+            cloudinary.config().cloud_name
+          }/image/upload`,
+          formData
+        );
         const imageUrl = res.data.secure_url;
         post.image = imageUrl;
 
-        dispatch(addPost(post)); 
-         navigate("/articles");
-      } catch (err) {
-        console.error("Error while uploading image or adding post:", err);
-      }
-    } else {
-      try {
-        dispatch(addPost(post)); 
+        dispatch(addPost(post));
         navigate("/articles");
       } catch (err) {
-        console.error("Error while adding post:", err);
+        console.error("Error while uploading image or adding post:", err);
       }
     }
   };
@@ -70,17 +73,11 @@ const AjouterArticleForm = () => {
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
           <FormLabel>Titre</FormLabel>
-          <Input
-            name="name"
-            placeholder="Article Title"
-          />
+          <Input name="name" placeholder="Article Title" />
         </FormControl>
         <FormControl>
           <FormLabel>Categorie</FormLabel>
-          <Select
-            name="category"
-            placeholder="Select Categorie"
-          >
+          <Select name="category" placeholder="Select Categorie">
             <option value="BreakFast">Breakfast</option>
             <option value="Lunch">Lunch</option>
             <option value="Dinner">Dinner</option>

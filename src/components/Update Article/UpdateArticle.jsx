@@ -3,11 +3,11 @@ import NavBar from '../Accueil/navbar';
 import Footer from '../Accueil/Footer';
 import UpdateArticleForm from './UpdateArticleForm';
 
-const UpdateArticle = () => {
+const UpdateArticle = ({posts}) => {
     return ( 
         <React.Fragment>
             <NavBar />
-            <UpdateArticleForm />
+            <UpdateArticleForm posts={posts} />
         </React.Fragment>
      );
 }
