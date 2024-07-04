@@ -19,9 +19,11 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MdLocalShipping } from "react-icons/md";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-export default function Article({posts}) {
+export default function Article() {
+  const {posts} = useSelector((store) => store.posts)
 
   const [data, setData] = useState([]);
 

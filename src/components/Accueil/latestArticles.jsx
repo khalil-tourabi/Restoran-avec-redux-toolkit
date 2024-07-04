@@ -8,10 +8,10 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const LatestArticles = ({posts}) => {
-  console.log(posts);
-
+const LatestArticles = () => {
+  const {posts} = useSelector((store) => store.posts)
   const latestPosts = posts.slice(-3);
 
   return (

@@ -8,8 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const SearchBar = ({posts}) => {
+export const SearchBar = () => {
+  const {posts} = useSelector((store) => store.posts)
 
   const [searchedItem, setSearchedItem] = useState("");
   const navigate = useNavigate();

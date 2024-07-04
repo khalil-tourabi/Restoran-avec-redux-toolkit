@@ -9,8 +9,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function PostWithLike({ posts }) {
+export default function PostWithLike() {
+  const {posts} = useSelector((store) => store.posts)
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 4; 
 

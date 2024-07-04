@@ -13,7 +13,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../../state/posts/postSlice";
 
-const ArticlesPage = ({posts}) => {
+const ArticlesPage = () => {
+  const {posts} = useSelector((store) => store.posts)
   const {user} = useSelector((store) => store.user)
   const dispatch = useDispatch();
 
