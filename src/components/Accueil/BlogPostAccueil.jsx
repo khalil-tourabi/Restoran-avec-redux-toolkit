@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Heading,
@@ -10,9 +10,17 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export default function PostWithLike({posts}) {
+export default function PostWithLike({ posts }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 4; 
 
-  const lastThreePosts = posts.slice(-4);
+  // Logic to calculate which posts to display
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Function to handle pagination click
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Box px={20}>
@@ -21,7 +29,7 @@ export default function PostWithLike({posts}) {
           Articles
         </Heading>
         <Flex justifyContent="center" flexWrap="wrap">
-          {lastThreePosts.map((post, index) => (
+          {currentPosts.map((post, index) => (
             <Link
               to={`/article/${post.id}`}
               key={index}
@@ -67,28 +75,25 @@ export default function PostWithLike({posts}) {
             </Link>
           ))}
         </Flex>
-        <center>
-          <Link
-            to={"/articles"}
-            style={{
-              display: "inline-block",
-              padding: "10px 20px",
-              backgroundColor: "#2b6cb0",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "5px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              transition: "background-color 0.3s ease",
-              textAlign: "center",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              marginBottom: "10px",
-            }}
-          >
-            Show More
-          </Link>
-        </center>
+        {/* Pagination controls */}
+        <Flex justifyContent="center" mt={5}>
+          {[...Array(Math.ceil(posts.length / postsPerPage)).keys()].map(
+            (pageNumber) => (
+              <Box
+                key={pageNumber}
+                onClick={() => paginate(pageNumber + 1)}
+                p={2}
+                cursor="pointer"
+                bg={pageNumber + 1 === currentPage ? "#2b6cb0" : "transparent"}
+                color={pageNumber + 1 === currentPage ? "white" : "black"}
+                borderRadius="md"
+                mx={1}
+              >
+                {pageNumber + 1}
+              </Box>
+            )
+          )}
+        </Flex>
       </React.Fragment>
     </Box>
   );
