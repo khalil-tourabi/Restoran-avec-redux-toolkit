@@ -35,6 +35,18 @@ export const handleSubmit = createAsyncThunk('user/handleSubmit', async ({ email
     }
 });
 
+export const logout = createAsyncThunk('user/logout', async (_, { getState }) => {
+    const {user} = getState().user;
+    const updateUser = {...user, isLogged: false};
+    try {
+        await axios.put(url, updateUser);
+        return updateUser;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+})
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -56,6 +68,12 @@ const userSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(handleSubmit.rejected, (state, action) => {
+                state.error = action.error.message;
+            })
+            .addCase(logout.fulfilled, (state, action) => {
+                state.user = action.payload;
+            })
+            .addCase(logout.rejected, (state, action) => {
                 state.error = action.error.message;
             })
     }
