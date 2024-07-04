@@ -10,10 +10,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost } from "../../state/posts/postSlice";
 
 const ArticlesPage = ({posts}) => {
+  const {user} = useSelector((store) => store.user)
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
@@ -77,17 +78,21 @@ const ArticlesPage = ({posts}) => {
               borderTop="1px"
               borderColor="black"
               p={4}
-              justify="space-between"
+              justify="center"
             >
+              {user.isLogged ? 
               <Button as={Link} to={`/updatepost/${post.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Edit
-              </Button>
+              </Button> : null
+            }
               <Button as={Link} to={`/article/${post.id}`} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Show Details
               </Button>
+              {user.isLogged ?
               <Button onClick={() => dispatch(deletePost(post.id))} colorScheme="teal" variant="outline" justifyContent={"center"}>
                 Delete
-              </Button>
+              </Button> : null
+            }
             </HStack>
           </Box>
         ))}
