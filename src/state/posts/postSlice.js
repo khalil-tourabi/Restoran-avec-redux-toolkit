@@ -56,19 +56,25 @@ const postSlice = createSlice({
             .addCase(getPosts.rejected, (state, action) => {
                 state.status = 'Failed';
                 state.error = action.error.message;
-            }).addCase(deletePost.pending, (state, action) => {
+            })
+            .addCase(deletePost.pending, (state, action) => {
                 state.status = 'loading';
-            }).addCase(deletePost.fulfilled, (state, action) => {
+            })
+            .addCase(deletePost.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.posts = action.payload;
-            }).addCase(deletePost.rejected, (state, action) => {
+            })
+            .addCase(deletePost.rejected, (state, action) => {
                 state.error = action.error.message;
-            }).addCase(addPost.pending, (state, action) => {
+            })
+            .addCase(addPost.pending, (state, action) => {
                 state.status = 'loading';
-            }).addCase(addPost.fulfilled, (state, action) => {
+            })
+            .addCase(addPost.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.posts.push(action.payload);
-            }).addCase(addPost.rejected, (state, action) => {
+            })
+            .addCase(addPost.rejected, (state, action) => {
                 state.error = action.error.message;
             })
     }

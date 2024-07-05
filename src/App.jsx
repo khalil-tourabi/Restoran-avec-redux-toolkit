@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getPosts } from "./state/posts/postSlice";
 import Login from "./components/Login/Login";
-
+import PrivateRoute from "./utils/PrivateRoute.jsx";
 function App() {
 
   const {posts} = useSelector((store) => store.posts)
@@ -25,11 +25,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Accueil posts={posts} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/ajouter-article" element={<AjouterArticle posts={posts} />} />
         <Route path="/a-propos" element={<APropos />} />
         <Route path="/articles" element={<Articles posts={posts} />} />
         <Route path="/article/:id" element={<AfficherArticle posts={posts} />} />
-        <Route path="/updatepost/:id" element={<UpdateArticle posts={posts} />} />
+        <Route path="/ajouter-article" element={<PrivateRoute Component={AjouterArticle} />} />
+        <Route path="/updatepost/:id" element={<PrivateRoute Component={UpdateArticle} />} />
       </Routes>
     </Router>
   );
