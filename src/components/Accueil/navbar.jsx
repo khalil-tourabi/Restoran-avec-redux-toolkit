@@ -7,7 +7,8 @@ import {
   HStack,
   useDisclosure,
   useColorModeValue,
-  Button, ButtonGroup
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { SearchBar } from "./searchBar";
@@ -19,7 +20,7 @@ import { useSelector } from "react-redux";
 const Links = [
   { name: "Accueil", path: "/" },
   { name: "Articles", path: "/articles" },
-  { name: "Ajouter Article", path: "/ajouter-article" },
+  // { name: "Ajouter Article", path: "/ajouter-article" },
   { name: "A Propos", path: "/a-propos" },
 ];
 
@@ -39,10 +40,11 @@ const NavLink = ({ children, path }) => (
   </Box>
 );
 
-export default function NavBar({ posts }) {
+export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {user} = useSelector((store) => store.user)
+  const { user } = useSelector((store) => store.user);
+  const { posts } = useSelector((store) => store.posts);
 
   return (
     <>
@@ -67,6 +69,7 @@ export default function NavBar({ posts }) {
                   {link.name}
                 </NavLink>
               ))}
+              {user.isLogged ? <Button as={Link} to="/ajouter-article">Ajouter Article</Button> : null}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
