@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -6,6 +6,8 @@ import {
   Select,
   Textarea,
   Button,
+  CircularProgress, 
+  CircularProgressLabel
 } from "@chakra-ui/react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -13,10 +15,14 @@ import { Cloudinary } from "cloudinary-core";
 import { useDispatch } from "react-redux";
 import { addPost } from "../../state/posts/postSlice";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AjouterArticleForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const cloudinary = new Cloudinary({
     cloud_name: "diuoo1cnx",
@@ -58,6 +64,13 @@ const AjouterArticleForm = () => {
     }
   };
 
+  const notify = () => toast("Adding Article!!");
+
+  const handleClick = () => {
+    notify();
+    // setIsButtonDisabled(true);
+  };
+
   return (
     <div
       style={{
@@ -70,6 +83,7 @@ const AjouterArticleForm = () => {
         marginTop: 100,
       }}
     >
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
           <FormLabel>Titre</FormLabel>
@@ -103,6 +117,7 @@ const AjouterArticleForm = () => {
             size="sm"
           />
         </FormControl>
+        {isButtonDisabled ? <CircularProgress isIndeterminate color='green.300' style={{ marginTop: '10px' }}/> : 
         <Button
           marginTop={17}
           size="md"
@@ -111,9 +126,11 @@ const AjouterArticleForm = () => {
           border="2px"
           borderColor="green.500"
           type="submit"
+          onClick={handleClick}
         >
           Ajouter
         </Button>
+        }
       </form>
     </div>
   );

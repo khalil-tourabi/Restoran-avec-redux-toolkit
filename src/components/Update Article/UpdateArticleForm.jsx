@@ -6,6 +6,8 @@ import {
   Select,
   Textarea,
   Button,
+  CircularProgress, 
+  CircularProgressLabel
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,8 +15,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { Cloudinary } from 'cloudinary-core';
 import { useDispatch } from "react-redux";
 import { updatePost } from "../../state/posts/postSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateArticleForm = () => {
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const notify = () => toast("Updating Article!!");
+
+  const handleClick = () => {
+    notify();
+    // setIsButtonDisabled(true);
+  };
+
   const dispatch = useDispatch();
   const [post, setPost] = useState({
     name: "",
@@ -78,7 +92,6 @@ const UpdateArticleForm = () => {
     }
 
     try {
-      // await axios.put(`http://localhost:3000/posts/${id}`, post);
       dispatch(updatePost({ id, data: post }));
       navigate("/articles");
     } catch (err) {
@@ -98,6 +111,7 @@ const UpdateArticleForm = () => {
         marginTop: 100,
       }}
     >
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
           <FormLabel>Titre</FormLabel>
@@ -143,6 +157,7 @@ const UpdateArticleForm = () => {
             size="sm"
           />
         </FormControl>
+        {isButtonDisabled ? <CircularProgress isIndeterminate color='green.300' style={{ marginTop: '10px' }}/> : 
         <Button
           marginTop={17}
           size="md"
@@ -151,9 +166,12 @@ const UpdateArticleForm = () => {
           border="2px"
           borderColor="green.500"
           type="submit"
+          onClick={handleClick}
+          // disabled={isButtonDisabled}
         >
           Modifier
         </Button>
+        }
       </form>
     </div>
   );

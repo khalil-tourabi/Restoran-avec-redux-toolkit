@@ -6,15 +6,15 @@ import WithBackgroundImage from "./BackgroundImage";
 import PostWithLike from "./BlogPostAccueil";
 import Footer from "./Footer";
 
-const Accueil = ({posts}) => {
+const Accueil = () => {
 
   return (
       <React.Fragment>
-        <NavBar posts={posts} />
+        <NavBar />
         <WithBackgroundImage />
-        <LatestArticles posts={posts} />
+        <LatestArticles />
         <Categories />
-        <PostWithLike posts={posts} />
+        <PostWithLike />
         <Footer />
       </React.Fragment>
   );

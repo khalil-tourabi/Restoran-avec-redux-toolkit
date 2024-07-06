@@ -3,7 +3,7 @@
     "id": 1,
     "email": "admin@email.com",
     "password": "password123",
-    "isLogged": true
+    "isLogged": false
   },
   "posts": [
     {
@@ -40,15 +40,6 @@
       "category": "Lunch",
       "image": "https://res.cloudinary.com/diuoo1cnx/image/upload/v1720176678/aij37vtsofc61hwm36my.jpg",
       "description": "this is a moroccan tajin"
-    },
-    {
-      "requestId": "9v920yCLSUJuX9sfamMdG",
-      "signal": {},
-      "id": "3d1ac41b-e01e-44cb-a3e5-d31a6394748c",
-      "name": "fadssssss",
-      "category": "BreakFast",
-      "image": "https://res.cloudinary.com/diuoo1cnx/image/upload/v1720267952/oskvyruxzyunuxhkfeeq.jpg",
-      "description": "fadsfaf"
     }
   ]
 }

@@ -29,8 +29,8 @@ const LatestArticles = () => {
                     src={post.image}
                     alt={post.name}
                     borderRadius="md"
-                    width="250px" 
-                    height="200px" 
+                    width="400px" 
+                    height="250px" 
                   />
                   <Heading size="md" mt={4}>
                     {post.name}

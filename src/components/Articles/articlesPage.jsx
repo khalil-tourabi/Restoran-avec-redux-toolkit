@@ -39,7 +39,8 @@ const ArticlesPage = () => {
         display="flex"
         flexDirection="row"
         flexWrap="wrap"
-        justifyContent="center"
+        justifyContent="flex-start"
+        marginLeft={20}
       >
         {posts.map((post) => (
           <Box
