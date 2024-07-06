@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const url = 'http://localhost:3000/posts'
+import { addArticle, deleteArticle, getArticles, updateArticle } from "../../service/articleService";
 
 const initialState = {
     posts: [],
@@ -11,7 +9,7 @@ const initialState = {
 
 export const getPosts = createAsyncThunk('posts/getPosts', async () => {
     try {
-        const res = await axios.get(url);
+        const res = await getArticles();
         return res.data;
     } catch (error) {
         console.error(error);
@@ -21,7 +19,7 @@ export const getPosts = createAsyncThunk('posts/getPosts', async () => {
 
 export const addPost = createAsyncThunk('posts/addPost', async (data) => {
     try {
-        const res = await axios.post(url, data);
+        const res = await addArticle(data);
         return res.data;
     } catch (error) {
         console.log('Error while adding post', error);
@@ -31,12 +29,21 @@ export const addPost = createAsyncThunk('posts/addPost', async (data) => {
 
 export const deletePost = createAsyncThunk('posts/deletePost', async (id) => {
     try {
-        const res = await axios.delete(url + '/' + id);
-        location.reload();
-        return res.data;
+        await deleteArticle(id);
+        return id;
     } catch (error) {
         console.log(error);
         throw error
+    }
+})
+
+export const updatePost = createAsyncThunk('posts/updatePost', async ({ id, data }) => {
+    try {
+        const res = await updateArticle(id, data);
+        return res.data;
+    } catch (error) {
+        console.log('There was an error updating the data ', error);
+        throw error;
     }
 })
 
@@ -62,7 +69,7 @@ const postSlice = createSlice({
             })
             .addCase(deletePost.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.posts = action.payload;
+                state.posts = state.posts.filter(post => post.id !== action.payload);
             })
             .addCase(deletePost.rejected, (state, action) => {
                 state.error = action.error.message;
@@ -77,6 +84,16 @@ const postSlice = createSlice({
             .addCase(addPost.rejected, (state, action) => {
                 state.error = action.error.message;
             })
+            .addCase(updatePost.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.posts = state.posts.map(post =>
+                    post.id === action.payload.id ? action.payload : post
+                );
+            })
+            .addCase(updatePost.rejected, (state, action) => {
+                state.error = action.error.message;
+            })
+
     }
 })
 

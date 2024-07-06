@@ -28,7 +28,8 @@ function App() {
         <Route path="/a-propos" element={<APropos />} />
         <Route path="/articles" element={<Articles posts={posts} />} />
         <Route path="/article/:id" element={<AfficherArticle posts={posts} />} />
-        <Route path="/ajouter-article" element={<PrivateRoute Component={AjouterArticle} />} />
+        {/* Private routes */}
+        <Route path="/ajouter-article" element={<PrivateRoute Component={AjouterArticle} />} /> 
         <Route path="/updatepost/:id" element={<PrivateRoute Component={UpdateArticle} />} />
       </Routes>
     </Router>

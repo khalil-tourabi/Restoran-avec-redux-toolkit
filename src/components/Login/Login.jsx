@@ -48,16 +48,16 @@ const Login = () => {
     }
   };
 
-    const handleSubmitForm = async (e) => {
-        e.preventDefault();
-        try {
-            await dispatch(handleSubmit({email, password})).unwrap();
-            navigate('/');
-        } catch (error) {
-            console.log('rejected');
-            alert(error.message)
-        }
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(handleSubmit({ email, password })).unwrap();
+      navigate("/");
+    } catch (error) {
+      console.log("rejected");
+      alert(error.message);
     }
+  };
 
   return (
     <React.Fragment>

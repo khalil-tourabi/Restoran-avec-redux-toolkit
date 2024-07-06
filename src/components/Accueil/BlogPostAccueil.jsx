@@ -26,7 +26,6 @@ export default function PostWithLike() {
 
   return (
     <Box px={20}>
-      <React.Fragment>
         <Heading margin={5} textAlign="center">
           Articles
         </Heading>
@@ -96,7 +95,6 @@ export default function PostWithLike() {
             )
           )}
         </Flex>
-      </React.Fragment>
     </Box>
   );
 }

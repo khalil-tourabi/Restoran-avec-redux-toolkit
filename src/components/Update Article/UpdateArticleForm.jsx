@@ -11,8 +11,11 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { Cloudinary } from 'cloudinary-core';
+import { useDispatch } from "react-redux";
+import { updatePost } from "../../state/posts/postSlice";
 
 const UpdateArticleForm = () => {
+  const dispatch = useDispatch();
   const [post, setPost] = useState({
     name: "",
     category: "",
@@ -75,7 +78,8 @@ const UpdateArticleForm = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/posts/${id}`, post);
+      // await axios.put(`http://localhost:3000/posts/${id}`, post);
+      dispatch(updatePost({ id, data: post }));
       navigate("/articles");
     } catch (err) {
       console.error("Error while modifying post:", err);
